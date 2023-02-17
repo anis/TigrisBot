@@ -19,6 +19,7 @@ from settings import *
 # Code for the bot itself (parse commands)
 intents = discord.Intents.default()
 intents.members = True
+intents.message_content = True
 client = commands.Bot(command_prefix='.', intents=intents)
 client.help_command = None
 bank = tigris.TigrisBank()
@@ -256,8 +257,10 @@ async def scoreboard(ctx, histfile=None, preamble=None):
 
     loss_ranking = sorted([(uid, loss[uid][1], loss[uid][0]) for uid in loss if loss[uid][0] > 0], key=lambda x: x[2], reverse=True)
 
-    max_ratio_old = max([data["messages"]/data["errors"] if data["errors"] != 0 else -1 for _, data in old_losers.items() if (data["messages"] >= 300)])
-    max_ratio = max([data["messages"]/data["errors"] if data["errors"] != 0 else -1 for _, data in all_losers.items() if (data["messages"] >= 300)])
+    ratios = [data["messages"]/data["errors"] if data["errors"] != 0 else -1 for _, data in all_losers.items() if (data["messages"] >= 300)]
+    max_ratio = -1
+    if len(ratios) > 0:
+        max_ratio = max(ratios)
 
     # RANKING UPDATE
     old_losers = sorted([(uid, data) for uid, data in old_losers.items() if (data["messages"] >= 300)],
