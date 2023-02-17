@@ -1,4 +1,5 @@
 import datetime
+
 def log_info(msg):
     date = datetime.datetime.now()
     print("{} >>> {}".format(date, msg))
