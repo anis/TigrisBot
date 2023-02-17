@@ -21,6 +21,10 @@ client.help_command = None
 @commands.check(utils.is_admin)
 async def add_loser(ctx, user_id):
     member = ctx.guild.get_member(int(user_id))
+    if member is None:
+        await ctx.message.reply("Utilisateur introuvable")
+        return
+
     role = get(ctx.guild.roles, name=LOSER_ROLE_NAME)
     await member.add_roles(role)
     msg = "Role {} added to {}".format(LOSER_ROLE_NAME, member.display_name)
@@ -32,6 +36,10 @@ async def add_loser(ctx, user_id):
 @commands.check(utils.is_admin)
 async def rm_loser(ctx, user_id):
     member = ctx.guild.get_member(int(user_id))
+    if member is None:
+        await ctx.message.reply("Utilisateur introuvable")
+        return
+
     role = get(ctx.guild.roles, name=LOSER_ROLE_NAME)
     await member.remove_roles(role)
     msg = "Role {} removed from {}".format(LOSER_ROLE_NAME, member.display_name)
