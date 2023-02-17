@@ -60,8 +60,6 @@ async def niniS2(ctx):
 
 
 async def scoreboard(ctx, histfile=None, preamble=None):
-    #to_clear = await ctx.message.channel.fetch_message(754960110706622635)
-    #await to_clear.remove_reaction('🚨', ctx.message.channel.guild.get_member(client.user.id))
     #return
     log_info("nini start")
     if preamble is not None:
